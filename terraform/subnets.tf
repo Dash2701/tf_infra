@@ -5,7 +5,7 @@ resource "aws_subnet" "private_subnet" {
   availability_zone = data.aws_availability_zones.available.names[count.index]
   vpc_id            = aws_vpc.main_vpc.id
   tags = {
-    Name      = "private_subnet_${var.app_name}_${var.private_subnet[count.index]}_${terraform.workspace}"
+    Name      = "${var.app_name}_${var.private_subnet[count.index]}_${terraform.workspace}"
     Terraform = true
   }
 }
@@ -17,7 +17,7 @@ resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.main_vpc.id
   map_public_ip_on_launch = true
   tags = {
-    Name      = "public_subnet_${var.app_name}_${var.public_subnet[count.index]}_${terraform.workspace}"
+    Name      = "${var.app_name}_${var.public_subnet[count.index]}_${terraform.workspace}"
     Terraform = true
   }
 }
