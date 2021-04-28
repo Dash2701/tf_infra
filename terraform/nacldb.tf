@@ -2,7 +2,7 @@ data "aws_subnet_ids" "privatesubnet" {
   vpc_id = aws_vpc.main_vpc.id
 
   tags = {
-    Name = "${var.app_name}_${var.private_subnet[1]}_${terraform.workspace}"
+    Name = "${var.app_name}-${var.private_subnet[1]}-${terraform.workspace}"
   }
 }
 

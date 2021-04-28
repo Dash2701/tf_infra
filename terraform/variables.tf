@@ -6,6 +6,11 @@ variable "aws_region" {
   type = string
 }
 
+variable "aws_profile"{
+  type = string
+  default = "default"
+}
+
 variable "app_name" {
   type    = string
   default = "appname"
@@ -26,7 +31,7 @@ variable "private_subnet" {
 
 variable "public_subnet" {
   type    = list(string)
-  default = ["public_subnet_common", "public_subnet_backend"]
+  default = ["public_subnet_A", "public_subnet_B"]
 }
 
 variable "app_type" {

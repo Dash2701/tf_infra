@@ -1,12 +1,3 @@
-resource "aws_security_group" "bastion" {
-  vpc_id = aws_vpc.main_vpc.id
-
-  tags = {
-    Name      = "sg_bastion_${var.app_name}_${terraform.workspace}"
-    Terraform = true
-  }
-}
-
 
 
 resource "aws_instance" "bastion" {
@@ -19,7 +10,7 @@ resource "aws_instance" "bastion" {
   associate_public_ip_address = true
 
   tags = {
-    Name      = "bastien_host_${var.app_name}_${terraform.workspace}"
+    Name      = "${var.app_name}-bastion-${terraform.workspace}"
     Terraform = true
   }
 

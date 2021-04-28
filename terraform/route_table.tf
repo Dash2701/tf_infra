@@ -8,7 +8,7 @@ resource "aws_route_table" "private_route_table" {
   }
 
   tags = {
-    Name      = "private_route_${var.app_name}_${var.app_type[count.index]}_${terraform.workspace}"
+    Name      = "${var.app_name}-privateroute-${var.app_type[count.index]}_${terraform.workspace}"
     Terraform = true
   }
 }
@@ -22,7 +22,7 @@ resource "aws_route_table" "public_route_table" {
   }
 
   tags = {
-    Name      = "public_route_${var.app_name}_${terraform.workspace}"
+    Name      = "${var.app_name}-publicroute-${terraform.workspace}"
     Terraform = true
   }
 }

@@ -3,7 +3,7 @@ resource "aws_vpc_endpoint" "s3" {
   service_name = "com.amazonaws.${var.aws_region}.s3"
 
   tags = {
-    Name      = "vpc_s3_endpoint_${var.app_name}_${terraform.workspace}"
+    Name      = "${var.app_name}-vpc-s3-endpoint-${terraform.workspace}"
     Terraform = true
   }
 

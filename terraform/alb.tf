@@ -6,14 +6,14 @@ resource "aws_alb" "main" {
   security_groups = [aws_security_group.lb.id]
 
   tags = {
-    Name      = "alb_${var.app_name}_${terraform.workspace}"
+    Name      = "${var.app_name}-alb-${terraform.workspace}"
     Terraform = true
   }
 
 }
 
 resource "aws_alb_target_group" "app" {
-  name        = "alb-target-group-${var.app_name}-${terraform.workspace}"
+  name        = "${var.app_name}-alb-target-group-${terraform.workspace}"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main_vpc.id

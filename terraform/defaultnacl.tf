@@ -22,6 +22,7 @@ resource "aws_default_network_acl" "default" {
 
   tags = {
     Name = "${var.app_name}-default-nacl-${terraform.workspace}"
+    Terraform = true
   }
   
 }

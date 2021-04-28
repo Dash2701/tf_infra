@@ -2,7 +2,7 @@
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main_vpc.id
   tags = {
-    Name      = "igw_${var.app_name}_${terraform.workspace}"
+    Name      = "${var.app_name}-igw-${terraform.workspace}"
     Terraform = true
   }
 }
