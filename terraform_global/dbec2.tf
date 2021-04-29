@@ -7,6 +7,6 @@ resource "aws_instance" "db_instance" {
   vpc_security_group_ids = aws_security_group.db_sg.*.id
   key_name               = var.key_name
   tags = {
-    Name = "${var.appname}-${var.db_instance_country[count.index]}-db-${terraform.workspace}"
+    Name = "${var.app_name}-${var.db_instance_country[count.index]}-db-${terraform.workspace}"
   }
 }

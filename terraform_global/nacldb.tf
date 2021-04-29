@@ -4,6 +4,10 @@ data "aws_subnet_ids" "privatesubnet" {
   tags = {
     Name = "${var.app_name}-${var.private_subnet[1]}-${terraform.workspace}"
   }
+
+  depends_on = [
+    aws_subnet.private_subnet
+  ]
 }
 
 output "demo" {
@@ -16,7 +20,7 @@ resource "aws_network_acl" "dmz" {
   vpc_id     = aws_vpc.main_vpc.id
   subnet_ids = data.aws_subnet_ids.privatesubnet.ids
   tags = {
-    Name = "nacl-${var.app_name}-${terraform.workspace}"
+    Name = "${var.app_name}-nacl-${terraform.workspace}"
   }
 }
 
@@ -63,17 +67,6 @@ resource "aws_network_acl_rule" "outbound" {
   protocol       = -1
   rule_action    = "allow"
   cidr_block     = "0.0.0.0/0"
-  from_port      = 0
-  to_port        = 0
-}
-
-resource "aws_network_acl_rule" "outbound_check" {
-  network_acl_id = aws_network_acl.dmz.id
-  rule_number    = 200
-  egress         = true
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = "161.181.29.0/0"
   from_port      = 0
   to_port        = 0
 }

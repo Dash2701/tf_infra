@@ -1,0 +1,8 @@
+--- 
+env: 'qa'
+
+region: 'us-east-1'
+
+country_list: 
+    - us  
+    - ca

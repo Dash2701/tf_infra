@@ -1,0 +1,28 @@
+--- 
+  - name: Run Teraform Plan
+    community.general.make:
+          chdir: terraform_global
+          target: plan
+          params:
+             ENV: "{{env}}"
+             region: "{{region}}"
+    register: tfplan
+
+
+  - name: Debug plan 
+    debug:
+      var: tfplan
+
+  - name: Run Teraform Apply
+    community.general.make:
+          chdir: terraform_global
+          target: apply
+          params:
+             ENV: "{{env}}"
+             region: "{{region}}"
+    register: tfapply
+
+
+  # - name: Debug apply 
+  #   debug:
+  #     var: tfapply

@@ -1,0 +1,10 @@
+---
+        - include_vars:
+            file: "env_vars/{{env}}/{{region}}/config.yaml"
+        - include_tasks: factset.yaml
+        - include_tasks: create_ecs_task_defination.yaml
+        - include_tasks: create_ecs_service.yaml
+
+
+       
+

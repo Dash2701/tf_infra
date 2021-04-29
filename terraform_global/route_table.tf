@@ -8,7 +8,7 @@ resource "aws_route_table" "private_route_table" {
   }
 
   tags = {
-    Name      = "${var.app_name}-privateroute-${var.app_type[count.index]}_${terraform.workspace}"
+    Name      = "${var.app_name}-privateroute-${var.app_type[count.index]}-${terraform.workspace}"
     Terraform = true
   }
 }

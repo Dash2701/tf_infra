@@ -13,7 +13,7 @@ resource "aws_alb" "main" {
 }
 
 resource "aws_alb_target_group" "app" {
-  name        = "${var.app_name}-alb-target-group-${terraform.workspace}"
+  name        = "${var.app_name}-alb-tg-${terraform.workspace}"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main_vpc.id
@@ -27,6 +27,11 @@ resource "aws_alb_target_group" "app" {
     timeout             = "3"
     path                = var.health_check_path
     unhealthy_threshold = "2"
+  }
+
+  tags = {
+    Name      = "${var.app_name}-alb-tg-${terraform.workspace}"
+    Terraform = true
   }
 }
 

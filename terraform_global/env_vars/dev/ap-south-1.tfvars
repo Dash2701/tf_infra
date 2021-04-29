@@ -18,4 +18,17 @@ db_instance_type = {
     "nordics":"t2.micro"
 }
 
-ecs_cluster_country = ["apac","nordics"]
+backend_instance_country=["apac","nordics"]
+
+backend_instance_ami={
+    "apac":"ami-0bcf5425cdc1d8a85"
+    "nordics" : "ami-0bcf5425cdc1d8a85"
+}
+
+
+backend_instance_type = {
+    "apac" : "t2.micro"
+    "nordics":"t2.micro"
+}
+
+#ecs_cluster_country = ["apac","nordics"]

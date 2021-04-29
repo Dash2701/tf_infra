@@ -2,7 +2,7 @@
 
 # Set up CloudWatch group and log stream and retain logs for 30 days
 resource "aws_cloudwatch_log_group" "app_log_group" {
-  name              = "/ecs/fargate/demo"
+  name              = "/ecs/fargate/${var.app_name}/${terraform.workspace}"
   retention_in_days = 30
 
   tags = {

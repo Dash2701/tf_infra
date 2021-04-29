@@ -6,8 +6,18 @@ variable "aws_region" {
   type = string
 }
 
-variable "aws_profile"{
-  type = string
+variable "company_name" {
+  type    = string
+  default = "demo"
+}
+
+variable "aws_regions" {
+  type    = list(string)
+  default = ["aws", "aws.us-east-1"]
+}
+
+variable "aws_profile" {
+  type    = string
   default = "default"
 }
 
@@ -26,12 +36,12 @@ variable "az_count" {
 
 variable "private_subnet" {
   type    = list(string)
-  default = ["private_subnet_ecs", "private_subnet_db"]
+  default = ["private-subnet-app", "private-subnet-db"]
 }
 
 variable "public_subnet" {
   type    = list(string)
-  default = ["public_subnet_A", "public_subnet_B"]
+  default = ["public-subnet-A", "public-subnet-B"]
 }
 
 variable "app_type" {
@@ -81,10 +91,30 @@ variable "db_instance_type" {
 }
 
 
+variable "backend_instance_country" {
+  type = list(string)
+}
+
+
+variable "backend_instance_ami" {
+  type = map
+}
+
+variable "backend_instance_type" {
+  type = map
+
+}
+
+
 variable "db_instance_country" {
   type = list(string)
 }
 
-variable "ecs_cluster_country" {
+/* variable "ecs_cluster_country" {
   type = list(string)
-}
+} */
+
+/* variable "ecs_task_execution_role_name" {
+  type    = string
+  default = "ecs-role"
+} */

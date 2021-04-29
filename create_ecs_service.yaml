@@ -1,0 +1,33 @@
+---
+# export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+- name: debug
+  debug:
+     var: subnetId
+
+- name: 
+  debug: 
+     msg: "check cluster: {{ lookup('aws_ssm', projectName, region=region,decrypt=False ) }}"
+
+- name: ECS service demo-api
+  ecs_service:
+      state: present
+      name: "{{ serviceName }}-{{ country }}-{{ env }}"
+      cluster: "{{ lookup('aws_ssm', clusterName, region=region,decrypt=False ) }}"
+      region: "{{ region }}"
+      launch_type: FARGATE
+      task_definition: "{{  task_output.taskdefinition[\"family\"]   }}:{{ task_output.taskdefinition[\"revision\"] }}"
+      desired_count: 1
+      network_configuration:
+        assign_public_ip: true
+        security_groups: 
+             - "{{ lookup('aws_ssm', securityGroup, region=region,decrypt=False ) }}" 
+        subnets:
+             - "{{ lookup('aws_ssm', subnetId, region=region,decrypt=False ) }}"
+      load_balancers:
+        - targetGroupArn: "{{ lookup('aws_ssm', targetGroup, region=region,decrypt=False ) }}"
+          containerName: "{{ containerName }}-{{ country }}-{{ env }}"
+          containerPort: 8080
+  register: "ecs_service"
+
+  
+   

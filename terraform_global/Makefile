@@ -32,7 +32,7 @@ default:
 	@echo " - destroy            : will delete the entire project's infrastructure"
 
 check:
-	@echo "Checking Terraform version... expecting md5 of [${TERRAFORM_REQUIRED_MD5}], found [${TERRAFORM_MD5}]"
+	@echo "Checking Terraform version... success expecting md5 of [${TERRAFORM_REQUIRED_MD5}], found [${TERRAFORM_MD5}]"
 	@if [ "${TERRAFORM_MD5}" != "${TERRAFORM_REQUIRED_MD5}" ]; then echo "Please ensure you are running terraform ${TERRAFORM_VERSION}."; exit 1; fi
 
 plan: check
@@ -42,37 +42,37 @@ plan: check
 	@echo "Pulling the required modules..."
 	@terraform get
 
-	@echo 'Switching to the [$(value ENV)] environment ...'
-	@terraform workspace select $(value ENV)
+	@echo 'Switching to the [$(value ENV)] [$(value region)] environment ...'
+	@terraform workspace select $(value ENV)-$(value region)
 
 	@terraform plan  \
-  	  -var-file="env_vars/$(value ENV).tfvars" \
-		-out $(value ENV).plan
+  	  -var-file="env_vars/$(value ENV)/$(value region).tfvars" \
+		-out $(value ENV)-$(value region).plan
 
 
 apply: check
 	$(call check_defined, ENV, Please set the ENV to apply. Values should be dev, test, uat or prod)
 
-	@echo 'Switching to the [$(value ENV)] environment ...'
-	@terraform workspace select $(value ENV)
+	@echo 'Switching to the [$(value ENV)] [$(value region)]environment ...'
+	@terraform workspace select $(value ENV)-${value region}
 
-	@echo "Will be applying the following to [$(value ENV)] environment:"
-	@terraform show -no-color $(value ENV).plan
+	@echo "Will be applying the following to [$(value ENV)] [$(value region)]environment:"
+	@terraform show -no-color $(value ENV)-$(value region).plan
 
-	@terraform apply $(value ENV).plan
-	@rm $(value ENV).plan
+	@terraform apply $(value ENV)-$(value region).plan
+	@rm $(value ENV)-$(value region).plan
 
 
 destroy: check
-	@echo "Switching to the [$(value ENV)] environment ..."
-	@terraform workspace select $(value ENV)
+	@echo "Switching to the [$(value ENV)] $(value region) environment ..."
+	@terraform workspace select $(value ENV)-$(value region)
 
 	@echo "## 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥 ##"
-	@echo "Are you really sure you want to completely destroy [$(value ENV)] environment ?"
+	@echo "Are you really sure you want to completely destroy [$(value ENV)] $(value region) environment ?"
 	@echo "## 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥 ##"
 	@read -p "Press enter to continue"
 	@terraform destroy \
-		-var-file="env_vars/$(value ENV).tfvars"
+		-var-file="env_vars/$(value ENV)/$(value region).tfvars"
 
 
 # Check that given variables are set and all have non-empty values,

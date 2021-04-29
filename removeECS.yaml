@@ -1,0 +1,8 @@
+---
+  - hosts: localhost
+    connection: local
+    tasks:
+      - name: Remove ECS 
+        ecs_service: 
+           name: appservice-AU-dev
+           state: deleting

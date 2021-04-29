@@ -1,0 +1,31 @@
+---
+  - hosts: localhost
+    connection: local
+    tasks:
+       - include_vars:
+            file: env_vars/input.yaml
+        
+       - include_vars:
+            file: "env_vars/{{env}}/{{region}}/config.yaml"
+
+      
+       - name: Run Teraform Version Check
+         community.general.make:
+               chdir: terraform_global
+               target: check
+         register: checkpoint
+    
+       - name: Debug the check 
+         debug: 
+           var: checkpoint.stdout
+
+       - name: checking the if condition
+         include_tasks: tf.yaml
+         when: '"success" in checkpoint.stdout'
+
+       - name: Create ECS Task Def and Service 
+         include_tasks: createEcs.yaml
+         vars: 
+            country: "{{item}}"
+         with_items:
+           - "{{country_list}}"

@@ -1,0 +1,7 @@
+--- 
+env: "qa"
+region: "us-east-1"
+serviceName: 'appservice'
+projectName: 'appname' 
+imageName: 'nginx'
+varsion: 'latest'

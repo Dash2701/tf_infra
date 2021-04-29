@@ -1,0 +1,24 @@
+--- 
+
+  - debug:
+       var: region
+
+  - debug:
+       var: env
+
+
+  - name: Setting fact for ECS Task and Service 
+    set_fact:
+        serviceName: "{{ serviceName }}"
+        containerName: "{{ projectName }}"
+        clusterName: "{{ projectName }}-ecs-cluster-{{ env }}-{{ region }}-arn"
+        securityGroup: "{{ projectName }}-ecs-sg-{{ env }}-{{ region }}"
+        subnetId: "{{ projectName }}-ecs-subnet-{{ env }}-{{ region }}"
+        targetGroup: "{{ projectName }}-alb-target-grp-{{ env }}-{{ region }}"
+        imageName: "nginx"
+        version: "latest"
+
+
+  - name: Debug 
+    debug: 
+      var: clusterName
