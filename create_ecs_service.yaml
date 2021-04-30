@@ -6,9 +6,9 @@
 
 - name: 
   debug: 
-     msg: "check cluster: {{ lookup('aws_ssm', projectName, region=region,decrypt=False ) }}"
+     msg: "check cluster: clusterName "
 
-- name: ECS service demo-api
+- name: "create service for ${{env}} {{country}}"
   ecs_service:
       state: present
       name: "{{ serviceName }}-{{ country }}-{{ env }}"

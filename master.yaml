@@ -8,24 +8,24 @@
        - include_vars:
             file: "env_vars/{{env}}/{{region}}/config.yaml"
 
-      
-       - name: Run Teraform Version Check
-         community.general.make:
-               chdir: terraform_global
-               target: check
-         register: checkpoint
-    
-       - name: Debug the check 
-         debug: 
-           var: checkpoint.stdout
+       - name: Get the caller Identity 
+         amazon.aws.aws_caller_info:
+         register: caller_info 
 
-       - name: checking the if condition
-         include_tasks: tf.yaml
-         when: '"success" in checkpoint.stdout'
+       -  debug:
+            var: caller_info.account
 
-       - name: Create ECS Task Def and Service 
-         include_tasks: createEcs.yaml
-         vars: 
-            country: "{{item}}"
-         with_items:
-           - "{{country_list}}"
+       - block: 
+            - name: Call terraform Scripts
+              include_tasks: tfmaster.yaml 
+              when: infradeploy is true
+
+            - name: Create ECS Task Def and Service 
+              include_tasks: createEcs.yaml
+              vars: 
+                   country: "{{item}}"
+              with_items:
+                 - "{{country_list}}"
+         when: caller_info.account == aws_account_id
+
+          

@@ -1,6 +1,8 @@
 --- 
-env: 'dev'
 
+aws_account_id: '655694158741'
+
+env: 'dev'
 
 region: 'ap-south-1'
 

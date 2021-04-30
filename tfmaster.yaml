@@ -1,0 +1,15 @@
+--- 
+       - name: Run Teraform Version Check
+         community.general.make:
+               chdir: terraform_global
+               target: check
+         register: checkpoint
+    
+       - name: Debug the check 
+         debug: 
+           var: checkpoint.stdout
+
+   
+       - name: checking the if condition
+         include_tasks: tf.yaml
+         when: '"success" in checkpoint.stdout'

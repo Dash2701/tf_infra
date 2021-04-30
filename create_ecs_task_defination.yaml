@@ -4,7 +4,7 @@
   debug:
      msg: "{{ containerName }}-{{ country }}-{{ env }}"
 
-- name: Create Task Defination
+- name: Create Task Defination ${{env}} {{country}}"
   community.aws.ecs_taskdefinition:
     state: present
     family: "{{ containerName }}-{{ country }}-{{ env }}"

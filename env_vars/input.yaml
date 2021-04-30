@@ -5,3 +5,20 @@ serviceName: 'appservice'
 projectName: 'appname' 
 imageName: 'nginx'
 varsion: 'latest'
+infradeploy: true
+
+
+multi-regions:
+    'dev-ap-south-1':
+           'env': 'dev'
+           'region': 'ap-south-1'
+
+    'qa-us-east-1':
+            'env': 'qa'
+            'region': 'us-east-1'
+
+
+    'qa-us-east-2' :
+            'env': 'qa'
+            'region': 'us-east-2'     
+    
