@@ -11,13 +11,12 @@ provider "aws" {
 
 
 
-
 terraform {
-  backend "s3" {
-    bucket         = "terraform-state-app-comp-285"
-    key            = "global/s3/terraform.tfstate"
-    dynamodb_table = "terraform-state-locking"
-    region         = "us-east-1"
-    encrypt        = true
+  backend "remote" {
+    organization = "example-org-e1ade2"
+
+    workspaces {
+      name = "getting-started"
+    }
   }
 }
